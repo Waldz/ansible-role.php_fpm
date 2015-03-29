@@ -1,0 +1,46 @@
+---
+- name: Install the PHP packages
+  apt: name={{ item }} state=present
+  with_items: php_apt_packages
+  tags: [php, packages]
+
+
+- name: Ensure required PHP extensions exist
+  apt: pkg={{ item }} state=latest
+  with_items: php_extensions
+  when: php_extensions is defined
+  notify: restart php-fpm
+  tags: [php, packages]
+
+
+- name: Ensure required PHP modules are enabled
+  command: >
+    php5enmod -s ALL {{ item }}
+  with_items: php_modules
+  when: php_modules is defined
+  notify: restart php-fpm
+  tags: [php, packages]
+
+
+- include: php_config.yml
+  when: php_config is defined
+  tags: [php, config]
+
+
+- include: fpm_pools.yml
+  when: php_fpm_pools is defined
+  tags: [php, config]
+
+
+- include: fpm_config.yml
+  when: php_fpm_config is defined
+  tags: [php, config]
+
+
+#- include: nginx_config.yml
+#  tags: [php, config]
+
+
+- include: start.yml
+  tags: [php, packages, config]
+

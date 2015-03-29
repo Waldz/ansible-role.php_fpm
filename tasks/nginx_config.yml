@@ -1,0 +1,12 @@
+- name: Check if Nginx exists
+  stat: path=/etc/nginx
+  register: nginx_fact
+  changed_when: false
+
+
+- name: Configure Nginx for PHP support
+  template: >
+    src="etc/nginx/conf.d/php-fpm.conf"
+    dest="/etc/nginx/conf.d/php-fpm.conf"
+  when: nginx_fact.stat.exists and nginx_fact.stat.isdir
+  notify: reload nginx

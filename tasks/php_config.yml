@@ -1,0 +1,30 @@
+- name: PHP custom configuration
+  ini_file: >
+    dest="{{ php_path_mods }}/custom.ini"
+    section="{{ item.section|default('PHP') }}"
+    option="{{ item.option }}"
+    value="{{ item.value }}"
+  with_items: php_config
+  notify: restart php-fpm
+
+
+- name: Check if PHP custom configuration is enabled
+  command: >
+    php5query -s fpm -m custom
+  register: custom_module_fact
+  failed_when: false
+  changed_when: custom_module_fact.rc != 0
+
+
+- name: Enable PHP custom configuration
+  command: >
+    php5enmod -s ALL custom
+  when: custom_module_fact.changed
+  notify: restart php-fpm
+
+
+- name: Create PHP log direcotry
+  file: >
+    state=directory
+    path={{ php_path_log }}
+    mode=0777

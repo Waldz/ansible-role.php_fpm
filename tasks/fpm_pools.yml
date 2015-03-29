@@ -1,0 +1,6 @@
+- name: PHP-FPM custom pools
+  template: >
+    src=etc/php5/fpm/pool.d/pool.conf
+    dest="{{ php_path_fpm_pools }}/{{ item.name }}.conf"
+  with_items: php_fpm_pools
+  notify: restart php-fpm

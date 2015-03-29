@@ -1,0 +1,25 @@
+- name: Create PHP-FPM custom configuration directory
+  file: >
+    state=directory
+    path={{ php_path_fpm_mods }}
+    mode=0755
+
+
+- name: Ensure PHP-FPM custom configuration is enabled
+  lineinfile: >
+    dest="{{ php_path_fpm }}/php-fpm.conf"
+    regexp="^include={{ php_path_fpm_mods }}/\*\.conf"
+    line="include={{ php_path_fpm_mods }}/*.conf"
+    state=present
+    create=no
+  notify: restart php-fpm
+
+
+- name: PHP-FPM custom configuration
+  ini_file: >
+    dest="{{ php_path_fpm_mods }}/custom.conf"
+    section="{{ item.section|default('global') }}"
+    option="{{ item.option }}"
+    value="{{ item.value }}"
+  with_items: php_fpm_config
+  notify: restart php-fpm

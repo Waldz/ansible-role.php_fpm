@@ -1,0 +1,44 @@
+---
+php_path_log: /var/log/php5
+php_path_mods: /etc/php5/mods-available
+php_path_cgi: /etc/php5/cgi
+php_path_cli: /etc/php5/cli
+php_path_fpm: /etc/php5/fpm
+php_path_fpm_mods: /etc/php5/fpm/fpm-conf.d
+php_path_fpm_pools: /etc/php5/fpm/pool.d
+
+php_apt_packages:
+  - php5
+  - php5-fpm
+  - php5-cli
+
+#php_extensions:
+#  - php5-mysql
+php_extensions: []
+
+#php_modules:
+#  - pdo
+#  - pdo_mysql
+php_modules: []
+
+php_config:
+  - option: error_log
+    value: "{{ php_path_log }}/php-errors.log"
+    #section: PHP
+
+php_fpm_config:
+ - option: error_log
+   value: "{{ php_path_log }}/fpm.log"
+   #section: global
+
+#  php_fpm_pools:
+#    - name: custom-pool
+#      user: www-data
+#      group: www-data
+#      listen: 9000
+#      pm: dynamic
+#      pm.max_children: 5
+#      pm.start_servers: 2
+#      pm.min_spare_servers: 1
+#      pm.max_spare_servers: 3
+#      chdir: /
