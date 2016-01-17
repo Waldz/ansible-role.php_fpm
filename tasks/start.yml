@@ -6,14 +6,6 @@
   changed_when: result.rc != 0 or result.stderr != ''
 
 
-- name: Check syntax of PHP-CGI php.ini configuration
-  shell: >
-    php-cgi -e --version --php-ini '{{ php_path_cgi }}/php.ini'
-  register: result
-  failed_when: result.rc != 0 or result.stderr != ''
-  changed_when: result.rc != 0 or result.stderr != ''
-
-
 - name: Check syntax of PHP-FPM configuration
   shell: >
     php5-fpm -e --test --php-ini '{{ php_path_fpm }}/php.ini'

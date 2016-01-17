@@ -1,7 +1,6 @@
 ---
 php_path_log: /var/log/php5
 php_path_mods: /etc/php5/mods-available
-php_path_cgi: /etc/php5/cgi
 php_path_cli: /etc/php5/cli
 php_path_fpm: /etc/php5/fpm
 php_path_fpm_mods: /etc/php5/fpm/fpm-conf.d
@@ -11,7 +10,6 @@ php_apt_packages:
   - php5
   - php5-fpm
   - php5-cli
-  - php5-cgi
 
 #php_extensions:
 #  - php5-mysql
