@@ -3,7 +3,7 @@
 Install
 ========
 ```
-git submodule add git@github.com:Waldz/php_fpm.nginx.git roles/php_fpm
+git submodule add git@github.com:Waldz/ansible-role.php_fpm.git roles/php_fpm
 ```
 
 Example
